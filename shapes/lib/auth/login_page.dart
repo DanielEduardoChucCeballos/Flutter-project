@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shapes/view/Error.dart';
 
 import '../main.dart';
 import '../view/Home.dart';
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Home()),
+      MaterialPageRoute(builder: (context) => Error_Test()),
     );
   }
 

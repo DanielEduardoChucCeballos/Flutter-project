@@ -5,10 +5,23 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        "Hola desde el Carrito de compras",
-        style: TextStyle(fontSize: 25),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.0),
+          child: AppBar(
+            automaticallyImplyLeading: true,
+            title: Text(
+              'Shapes 3D',
+              style: TextStyle(fontSize: 30, ),
+            ),
+            centerTitle: true,
+            elevation: 8,
+          ),
+        ),
+        body: Center(
+          child: Text('Codesource.io'),
+        ),
       ),
     );
   }
