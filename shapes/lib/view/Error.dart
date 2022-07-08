@@ -8,7 +8,6 @@ class Error_Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return   Scaffold(
-      bottomNavigationBar: ButoonNav(),
       appBar: AppBar(
         title: Center(
           child: Text('Error_Test', style: TextStyle(fontSize: 30)),

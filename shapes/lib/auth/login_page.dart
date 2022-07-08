@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shapes/view/Error.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:shapes/routes.dart';
+import 'dart:async';
 import '../main.dart';
 import '../view/Home.dart';
 
@@ -12,6 +14,36 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final username = TextEditingController();
+  final password = TextEditingController();
+
+  String use = "";
+  String pass = "";
+
+  void ingresar(use, pass) async {
+    try {
+      var url = 'http://192.168.1.71/login.php';
+      var response = await http.post(Uri.parse(url), body: {
+        'username': use,
+        'password': pass,
+      }).timeout(const Duration(seconds: 90));
+
+      if (response.body == 'true') {
+        Navigator.pushNamed(context, 'navigator',
+            arguments: {'username': use, 'password': pass});
+        
+        FocusScope.of(context).unfocus();
+      } else {
+        print("Usuario incorrecto");
+        print('Response body: ${response.body}');
+      }
+    } on TimeoutException catch (e) {
+      print('Se agotó el tiempo de conexión');
+    } on Error catch (e) {
+      print('Http error');
+    }
+  }
+
   bool _loading = false;
   @override
   Widget build(BuildContext context) {
@@ -51,12 +83,14 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextField(
+                        controller: username,
                         decoration: InputDecoration(labelText: "Usuario:"),
                       ),
                       SizedBox(
                         height: 40,
                       ),
                       TextField(
+                        controller: password,
                         decoration: InputDecoration(labelText: "Contraseña:"),
                         obscureText: true,
                       ),
@@ -115,10 +149,13 @@ class _LoginPageState extends State<LoginPage> {
         _loading = true;
       });
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Error_Test()),
-    );
+
+    use = username.text;
+    pass = password.text;
+
+    if (use != '' && pass != '') {
+      ingresar(use, pass);
+    }
   }
 
   void _showRegister(BuildContext context) {

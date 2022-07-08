@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shapes/view/Button_nav.dart';
-import 'view/Home.dart';
-import 'auth/login_page.dart';
+
 /* import 'account.dart'; */
-import 'view/NavigationDrawer.dart';
-import 'view/Cart.dart';
-import 'view/Search.dart';
+
 import 'routes.dart';
 
 void main() => runApp(MyApp());
@@ -31,7 +27,7 @@ class _MyAppState extends State<MyApp> {
         )),
       ),
         initialRoute: 'login',
-
+    
     );
     
   }

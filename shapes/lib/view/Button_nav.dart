@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
-import 'Cart.dart';
-import 'Error.dart';
+import 'package:shapes/view/products.dart';
 import 'Home.dart';
-import 'Search.dart';
+import 'Settings.dart';
 
 class ButoonNav extends StatefulWidget {
+
+
+
+  
   ButoonNav({Key? key}) : super(key: key);
 
   @override
@@ -16,10 +18,10 @@ class _ButoonNavState extends State<ButoonNav> {
   int _paginaActual = 1;
   List<Widget> _paginas = [
     //*Aqui vas agregando las paginas que quieres
-    Error_Test(),
+    
+    Product(),
     Home(),
-    Cart(),
-    Search(),
+    Settings(),
   ];
 
   @override
@@ -39,10 +41,10 @@ class _ButoonNavState extends State<ButoonNav> {
         },
         currentIndex: _paginaActual,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.plus_one), label: "Errror"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart), label: "Shopping Cart"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],
@@ -50,3 +52,4 @@ class _ButoonNavState extends State<ButoonNav> {
     );
   }
 }
+

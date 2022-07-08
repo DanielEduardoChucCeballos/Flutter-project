@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shapes/view/MenuDrawer.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class Cart extends StatelessWidget {
             elevation: 8,
           ),
         ),
+        drawer: MenuDrawer(),
         body: Center(
           child: Text('Codesource.io'),
         ),
