@@ -17,7 +17,7 @@ class _ProductState extends State<Product> {
   List<Datos_Productos> data = <Datos_Productos>[];
 
   Future<List<Datos_Productos>> tomar_datos() async {
-    var url = "http://192.168.1.71/products.php";
+    var url = "http://192.168.1.72/products.php";
 
     var response =
         await http.post(Uri.parse(url)).timeout(Duration(seconds: 90));
@@ -66,14 +66,15 @@ class _ProductState extends State<Product> {
                     children: [
                       FadeInImage(
                           placeholder: AssetImage('assets/images/Loading.gif'),
-                          image: AssetImage("assets/images/article-1.jpg"),
+                          image: AssetImage(data[index].slug),
                           height: 80,
                           fit: BoxFit.cover),
                       Container(
                           padding: EdgeInsets.all(10),
-                          child: Text(data[index].name)),
+                          child: Text(data[index].name ),)
+                          ,
                       Center(
-                          child: Text("000.00",
+                          child: Text( "\$"+data[index].price,
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,

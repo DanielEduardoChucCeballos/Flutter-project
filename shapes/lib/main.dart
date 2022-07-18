@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-/* import 'account.dart'; */
-
 import 'routes.dart';
 
 void main() => runApp(MyApp());
@@ -15,20 +12,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       routes: obtenerRuta(),
       title: 'Shapes 3D',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
         appBar: AppBar(
             title: Center(
           child: Text('Shapes 3D', style: TextStyle(fontSize: 30)),
         )),
       ),
-        initialRoute: 'login',
-    
+      initialRoute: 'login',
     );
-    
   }
 }
