@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void ingresar(use, pass) async {
     try {
-      var url = 'http://192.168.1.72/login.php';
+      var url = 'http://192.168.1.131/login.php';
       var response = await http.post(Uri.parse(url), body: {
         'username': use,
         'password': pass,

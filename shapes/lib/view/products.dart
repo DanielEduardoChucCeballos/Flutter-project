@@ -17,7 +17,7 @@ class _ProductState extends State<Product> {
   List<Datos_Productos> data = <Datos_Productos>[];
 
   Future<List<Datos_Productos>> tomar_datos() async {
-    var url = "http://192.168.1.72/products.php";
+    var url = "http://192.168.1.131/products.php";
 
     var response =
         await http.post(Uri.parse(url)).timeout(Duration(seconds: 90));

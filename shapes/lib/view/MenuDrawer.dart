@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shapes/view/Home.dart';
 
+import 'Formulario.dart';
+
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({Key? key}) : super(key: key);
 
@@ -22,6 +24,12 @@ class MenuDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: (){
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Formulario()),
+                        );
+              },
               title: Text(
                 'Mis Modelos 3D',
                 style: TextStyle(
