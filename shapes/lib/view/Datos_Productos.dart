@@ -1,6 +1,6 @@
 class Datos_Productos {
   final String name;
-  final String slug;
+  final String image;
   final String description;
   final String price;
   final String quantity;
@@ -8,7 +8,7 @@ class Datos_Productos {
 
   Datos_Productos({
     required this.name,
-    required this.slug,
+    required this.image,
     required this.description,
     required this.price,
     required this.quantity,
@@ -18,7 +18,7 @@ class Datos_Productos {
   factory Datos_Productos.fromJson(Map<String, dynamic> json) {
     return Datos_Productos(
       name: json["name"],
-      slug: json["slug"],
+      image: json["image"],
       description: json["description"],
       price: json["price"],
       quantity: json["quantity"],

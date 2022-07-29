@@ -17,7 +17,7 @@ class _ProductState extends State<Product> {
   List<Datos_Productos> data = <Datos_Productos>[];
 
   Future<List<Datos_Productos>> tomar_datos() async {
-    var url = "http://192.168.1.131/products.php";
+    var url = "https://shapes3dofficial.000webhostapp.com/products.php";
 
     var response =
         await http.post(Uri.parse(url)).timeout(Duration(seconds: 90));
@@ -50,50 +50,73 @@ class _ProductState extends State<Product> {
           title: Text("Lista de Productos recuperados \n de la base de datos"),
         ),
         drawer: MenuDrawer(),
-        
         body: ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {
             return Container(
               child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.fromLTRB(15, 20, 15, 15),
-                elevation: 4,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Column(
+                child: Container(
+                  height: 100,
+                  color: Colors.white,
+                  child: Row(
                     children: [
-                      FadeInImage(
-                          placeholder: AssetImage('assets/images/Loading.gif'),
-                          image: AssetImage(data[index].slug),
-                          height: 80,
-                          fit: BoxFit.cover),
-                      Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(data[index].name ),)
-                          ,
                       Center(
-                          child: Text( "\$"+data[index].price,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.cyan[800]))),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Details()),
-                            );
-                          },
-                          child: Text("Añadir a la lista",
-                              style: TextStyle(
-                                  color: Colors.cyan[800],
-                                  fontWeight: FontWeight.bold))),
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Expanded(
+                            child: FadeInImage(
+                                placeholder:
+                                    AssetImage('assets/images/Loading.gif'),
+                                image: AssetImage(data[index].image),
+                                height: 80,
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: ListTile(
+                                  title: Text(data[index].name),
+                                  subtitle: Text("\$" + data[index].price),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      child: Text("Comprar"),
+                                      onPressed: () {},
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    TextButton(
+                                      child: Text("Añadir a la lista"),
+                                      onPressed: () {},
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        flex: 8,
+                      ),
                     ],
                   ),
                 ),
+                elevation: 8,
+                margin: EdgeInsets.all(10),
               ),
             );
           },
@@ -102,5 +125,3 @@ class _ProductState extends State<Product> {
     );
   }
 }
-
-

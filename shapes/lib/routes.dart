@@ -3,6 +3,7 @@ import 'package:shapes/auth/login_page.dart';
 import 'package:shapes/view/Details.dart';
 import 'package:shapes/view/Error.dart';
 import 'package:shapes/view/Home.dart';
+import 'package:shapes/view/profile.dart';
 
 import 'view/Button_nav.dart';
 
@@ -15,5 +16,6 @@ Map<String, WidgetBuilder> obtenerRuta() {
   'home': (BuildContext context) => Home(),
   'error': (BuildContext context) => Error_Test(),
   'navigator': (BuildContext context) =>ButoonNav(),
+  'profile': (BuildContext context) => Profile(),
   };
 }

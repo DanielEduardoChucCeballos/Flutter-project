@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:shapes/view/index.dart';
+import 'package:shapes/view/index2.dart';
 import 'MenuDrawer.dart';
 
 class Home extends StatefulWidget {
@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         drawer: MenuDrawer(),
-        body: Index(),
+        body: IndexDos(),
       ),
     );
   }

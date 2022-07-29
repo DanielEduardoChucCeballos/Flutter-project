@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shapes/view/Home.dart';
+import 'package:shapes/view/profile.dart';
 
 import 'Formulario.dart';
 
@@ -15,6 +16,7 @@ class MenuDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
+              
               accountName: Text('Test123'),
               accountEmail: Text('test@123.com'),
               currentAccountPicture: CircleAvatar(
@@ -27,11 +29,11 @@ class MenuDrawer extends StatelessWidget {
               onTap: (){
                   Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Formulario()),
+                          MaterialPageRoute(builder: (context) => Profile()),
                         );
               },
               title: Text(
-                'Mis Modelos 3D',
+                'Mi Perfil',
                 style: TextStyle(
                   fontSize: 18,
                 ),
