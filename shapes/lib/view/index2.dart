@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'Datos_Category.dart';
+import 'Datos_Productos.dart';
+import 'Details.dart';
 
 class IndexDos extends StatefulWidget {
   const IndexDos({Key? key}) : super(key: key);
@@ -13,22 +15,40 @@ class IndexDos extends StatefulWidget {
 }
 
 class _IndexDosState extends State<IndexDos> {
-/*   List<Datos_Category> data = <Datos_Category>[];
+  List<Datos_Productos> data = <Datos_Productos>[];
 
-  Future<List<Datos_Category>> tomar_datos() async {
-    var url = "http://192.168.1.138/categories.php";
+  Future<List<Datos_Productos>> tomar_datos() async {
+    var url = "https://shapes3dofficial.000webhostapp.com/products.php";
 
     var response =
         await http.post(Uri.parse(url)).timeout(Duration(seconds: 90));
 
     var datos = json.decode(response.body);
 
-    var registros = <Datos_Category>[];
+    var registros = <Datos_Productos>[];
 
     for (datos in datos) {
-      registros.add(Datos_Category.fromJson(datos));
+      registros.add(Datos_Productos.fromJson(datos));
     }
     return registros;
+  }
+
+  List<Datos_Category> dataCategory = <Datos_Category>[];
+
+  Future<List<Datos_Category>> tomar_categories() async {
+    var urlC = "http://192.168.1.70/categories.php";
+
+    var responseC =
+        await http.post(Uri.parse(urlC)).timeout(Duration(seconds: 90));
+
+    var dataCategory = json.decode(responseC.body);
+
+    var registrosC = <Datos_Category>[];
+
+    for (dataCategory in dataCategory) {
+      registrosC.add(Datos_Category.fromJson(dataCategory));
+    }
+    return registrosC;
   }
 
   @override
@@ -39,8 +59,13 @@ class _IndexDosState extends State<IndexDos> {
         data.addAll(value);
       });
     });
+    tomar_categories().then((value) {
+      setState(() {
+        dataCategory.addAll(value);
+      });
+    });
   }
- */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,49 +173,101 @@ class _IndexDosState extends State<IndexDos> {
               ],
             ),
           ),
+          //* metodo Aqui
           Expanded(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                Container(
-                  width: 200,
-                  color: Colors.purple[600],
-                  child: const Center(
-                      child: Text(
-                    'Item 1',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  )),
-                ),
-                Container(
-                  width: 200,
-                  color: Colors.purple[500],
-                  child: const Center(
-                      child: Text(
-                    'Item 2',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  )),
-                ),
-                Container(
-                  width: 200,
-                  color: Colors.purple[400],
-                  child: const Center(
-                      child: Text(
-                    'Item 3',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  )),
-                ),
-                Container(
-                  width: 200,
-                  color: Colors.purple[300],
-                  child: const Center(
-                      child: Text(
-                    'Item 4',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  )),
-                ),
-              ],
-            ),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: dataCategory.length,
+                itemBuilder: (context, indexC) {
+                  return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 120.0,
+                        width: 120.0,
+                        /* decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/userxd.gif'),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: BoxShape.circle,
+                        ), */
+                        child: Text(dataCategory[indexC].name),
+                      ));
+                }),
           ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  child: Card(
+                    child: Container(
+                      height: 100,
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Expanded(
+                                child: FadeInImage(
+                                    placeholder:
+                                        AssetImage('assets/images/Loading.gif'),
+                                    image: AssetImage(data[index].image),
+                                    height: 80,
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 5,
+                                    child: ListTile(
+                                      title: Text(data[index].name),
+                                      subtitle: Text("\$" + data[index].price),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          child: Text("Comprar"),
+                                          onPressed: () {},
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        TextButton(
+                                          child: Text("Añadir a la lista"),
+                                          onPressed: () {},
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            flex: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                    elevation: 8,
+                    margin: EdgeInsets.all(10),
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
     );

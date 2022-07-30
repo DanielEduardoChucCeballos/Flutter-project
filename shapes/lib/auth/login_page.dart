@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.body == 'true') {
         Navigator.pushNamed(context, 'navigator',
             arguments: {'username': use, 'password': pass});
-        
+
         FocusScope.of(context).unfocus();
       } else {
         print("Usuario incorrecto");
@@ -155,6 +155,26 @@ class _LoginPageState extends State<LoginPage> {
 
     if (use != '' && pass != '') {
       ingresar(use, pass);
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext) {
+            return AlertDialog(
+              title: Text("Usuario o contraseña incorrecto"),
+              content: SingleChildScrollView(
+                  child: ListBody(
+                children: [
+                  Text("Porfavor Verifique sus datos"),
+                ],
+              )),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Aceptar'),
+                  child: const Text('Aceptar'),
+                ),
+              ],
+            );
+          });
     }
 /*     Navigator.pushNamed(context, 'navigator',); */
   }
