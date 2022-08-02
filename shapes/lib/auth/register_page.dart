@@ -1,46 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:shapes/auth/register_page.dart';
-import 'package:shapes/view/Error.dart';
+import 'package:shapes/auth/login_page.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:shapes/routes.dart';
 import 'dart:async';
-import 'package:flutter_session/flutter_session.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+import '../view/Button_nav.dart';
+
+class RegisterPage extends StatefulWidget {
+  RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final username = TextEditingController();
+  final email = TextEditingController();
   final password = TextEditingController();
+  final passwordve = TextEditingController();
 
   String use = "";
+  String ema = "";
   String pass = "";
 
-  void ingresar(use, pass) async {
+  void ingresar(use, ema, pass) async {
     try {
-      var url = 'http://192.168.1.73/login.php';
+      var url = 'http://192.168.1.73/register.php';
       var response = await http.post(Uri.parse(url), body: {
         'username': use,
+        'email': ema,
         'password': pass,
       }).timeout(const Duration(seconds: 90));
 
       if (response.body == 'true') {
-        Navigator.pushNamed(context, 'navigator',
-            arguments: {'username': use, 'password': pass});
-        
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ButoonNav()),
+        );
         FocusScope.of(context).unfocus();
-        print('Response body: ${response.body}');
-        await FlutterSession().set("token", use);
-        dynamic token = await FlutterSession().get("token");
-        print(token);
+                print('Response body: ${response.body}');
+
       } else {
-        print("Usuario incorrecto");
-        print('Response body: ${response.body}');
+        print("Error por alguna reazón XD");
+                print('Response body: ${response.body}');
       }
     } on TimeoutException catch (e) {
       print('Se agotó el tiempo de conexión');
@@ -98,6 +101,14 @@ class _LoginPageState extends State<LoginPage> {
                         height: 40,
                       ),
                       TextField(
+                        controller: email,
+                        decoration:
+                            InputDecoration(labelText: "Correo Electrónico:"),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      TextField(
                         controller: password,
                         decoration: InputDecoration(labelText: "Contraseña:"),
                         obscureText: true,
@@ -109,11 +120,11 @@ class _LoginPageState extends State<LoginPage> {
                         color: Color.fromARGB(255, 2, 18, 53),
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         textColor: Colors.white,
-                        onPressed: () => _login(context),
+                        onPressed: () => _Register(context),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text("Iniciar Sesión"),
+                            Text("Registrarse"),
                             if (_loading == true)
                               Container(
                                 height: 20,
@@ -130,12 +141,12 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("¿No estas registrado?"),
+                          Text("¿Tienes una cuenta?"),
                           FlatButton(
                             textColor: Theme.of(context).primaryColor,
-                            child: Text("Registrarse"),
+                            child: Text("Inicia sesión"),
                             onPressed: () {
-                              _showRegister(context);
+                              _showLogin(context);
                             },
                           )
                         ],
@@ -151,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  void _login(BuildContext context) {
+  void _Register(BuildContext context) {
     if (!_loading) {
       setState(() {
         _loading = true;
@@ -159,38 +170,19 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     use = username.text;
+    ema = email.text;
     pass = password.text;
 
-    if (use != '' && pass != '') {
-      ingresar(use, pass);
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext) {
-            return AlertDialog(
-              title: Text("Usuario o contraseña incorrecto"),
-              content: SingleChildScrollView(
-                  child: ListBody(
-                children: [
-                  Text("Porfavor Verifique sus datos"),
-                ],
-              )),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Aceptar'),
-                  child: const Text('Aceptar'),
-                ),
-              ],
-            );
-          });
+    if (use != '' && ema != '' && pass != '') {
+      ingresar(use, ema, pass);
     }
 /*     Navigator.pushNamed(context, 'navigator',); */
   }
 
-  void _showRegister(BuildContext context) {
+  void _showLogin(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => RegisterPage()),
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 }

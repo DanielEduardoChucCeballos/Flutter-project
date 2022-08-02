@@ -3,9 +3,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'Datos_Category.dart';
-import 'Datos_Productos.dart';
+import '../datos/Datos_Category.dart';
+import '../datos/Datos_Productos.dart';
 import 'Details.dart';
+import 'package:flutter_session/flutter_session.dart';
+
 
 class IndexDos extends StatefulWidget {
   const IndexDos({Key? key}) : super(key: key);
@@ -15,6 +17,7 @@ class IndexDos extends StatefulWidget {
 }
 
 class _IndexDosState extends State<IndexDos> {
+
   List<Datos_Productos> data = <Datos_Productos>[];
 
   Future<List<Datos_Productos>> tomar_datos() async {
@@ -36,7 +39,7 @@ class _IndexDosState extends State<IndexDos> {
   List<Datos_Category> dataCategory = <Datos_Category>[];
 
   Future<List<Datos_Category>> tomar_categories() async {
-    var urlC = "http://192.168.1.70/categories.php";
+    var urlC = "http://192.168.1.73/categories.php";
 
     var responseC =
         await http.post(Uri.parse(urlC)).timeout(Duration(seconds: 90));
@@ -50,6 +53,7 @@ class _IndexDosState extends State<IndexDos> {
     }
     return registrosC;
   }
+
 
   @override
   void initState() {
@@ -66,12 +70,21 @@ class _IndexDosState extends State<IndexDos> {
     });
   }
 
+void __getSessions() async {
+  var token = await FlutterSession().get("token");
+  
+
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          
           Expanded(
             child: ListView(
               children: [
@@ -108,9 +121,10 @@ class _IndexDosState extends State<IndexDos> {
                             ); */
                             },
                             child: const Text(
-                              'Pedidos Persinalizados',
+                              'Pedidos Persinalizados ',
                               style: TextStyle(color: Colors.white),
                             ),
+                            
                           ),
                         ),
                       ),
@@ -179,19 +193,26 @@ class _IndexDosState extends State<IndexDos> {
                 scrollDirection: Axis.horizontal,
                 itemCount: dataCategory.length,
                 itemBuilder: (context, indexC) {
+                  /*  String iconli = dataCategory[indexC].icon; */
+
                   return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 120.0,
-                        width: 120.0,
-                        /* decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/userxd.gif'),
-                            fit: BoxFit.fill,
+                      child: GestureDetector(
+                        child: CircleAvatar(
+                          child: ClipOval(
+                            child: Image.asset(dataCategory[indexC].icon),
                           ),
-                          shape: BoxShape.circle,
-                        ), */
-                        child: Text(dataCategory[indexC].name),
+                          radius: 40,
+                          backgroundColor: Colors.white,
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Details(),
+                            ),
+                          );
+                        },
                       ));
                 }),
           ),
@@ -270,6 +291,7 @@ class _IndexDosState extends State<IndexDos> {
           )
         ],
       ),
+
     );
   }
 }
